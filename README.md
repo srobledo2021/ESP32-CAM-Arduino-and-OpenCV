@@ -24,6 +24,8 @@ The first step is to open the Arduino IDE and access the board URL manager by cl
 
 https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
 
+![image](https://github.com/user-attachments/assets/ef960f5e-7570-4a77-9ffb-44d219d5681e)
+
 
 # STEP 3 Install ESP32 Board Manager
 
@@ -108,3 +110,5 @@ If we click on the "Start Stream" button below the menu, we can start streaming!
 
 ![image](https://github.com/user-attachments/assets/e124a15f-a7ef-47c3-8d54-0282c110b5d8)
 
+
+![image-17-1024x766](https://github.com/user-attachments/assets/2141b9f9-d8d2-4819-a280-1c1a406887c2)
