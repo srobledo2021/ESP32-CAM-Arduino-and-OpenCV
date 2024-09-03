@@ -284,9 +284,14 @@ if __name__ == '__main__':
 ```
 
 
-Execute this code by typing on the prompt:
+Execute this code in any programming app like VisualCode or by typing on the prompt:
 ```
 python -m [code_name]
 ```
 (move to the directory where the code is located by using "cd [directory_name]")
 
+If it worked, a new window should pop up and show the camera video. From here you can use openCV however you want and modify this easy code with anything you are interested in doing !
+
+Here is a video of a code that recognizes Pikachu !
+
+https://github.com/user-attachments/assets/c6cf159a-df46-4acf-968a-2f93826e959f
