@@ -49,4 +49,45 @@ This driver belongs to the CH340 chip, which allows us to use our PC's USB on on
 
 I`ll provide you one, but it can be downloaded from any webpage.
 
-[](https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/all)
+https://learn.sparkfun.com/tutorials/how-to-install-ch340-drivers/all
+
+There is another much easier way to select both board and port which is by clicking on the highlighted button on top with the name of the board, and then click on "select other board and port".
+
+![image](https://github.com/user-attachments/assets/c9072d8c-5b6e-4417-a5dc-27804e94c5fd)
+
+![image](https://github.com/user-attachments/assets/16a4588f-a5f5-4126-b968-a3825dd7f817)
+
+# STEP 5 Test the camera
+
+Once all of this is done, we can test the camera from the ESP32 with an already provided code. You can find it in File/examples/ESP32/Camera/CameraWebServer
+
+![image](https://github.com/user-attachments/assets/3486db22-1608-4281-b7f2-98f3abaf7d7e)
+
+# STEP 6 Modify the code
+
+First of all we need to comment the default camera model and use the AI thinker cam:
+
+![image](https://github.com/user-attachments/assets/67850573-b91a-4d12-9693-1a6a5b1d7435)
+
+Then, we need to add an ssid and a password to connect to wifi in this part of the code: 
+```
+const char *ssid = "**********";
+const char *password = "**********";
+```
+Eg.
+```
+const char *ssid = "*budaphone5G";
+const char *password = "3d6hB46f";
+```
+Once it is done, we can upload the code to the ESP32 by clicking on the top left arrow. It does not only debug the code, but also uploads it.
+
+![image](https://github.com/user-attachments/assets/57046f99-ba3b-4670-b0d9-b6a6ddd05fb3)
+
+To see what is happening, we need to open the Serial monitor, if it does not appear below, we can open it up by clicking on the top right corner icon: 
+
+![image](https://github.com/user-attachments/assets/0b68f915-9082-4d19-87c2-52e092b4a7ba)
+
+It is important to set the Serial Monitor with the same frecuency as the Serial is set with, in this case: 
+
+![image](https://github.com/user-attachments/assets/c89f7077-8ade-4ce8-8039-05f94cc705e5)
+![image](https://github.com/user-attachments/assets/9b9ae6a4-ee9d-40e5-8575-ac0a4da54927)
