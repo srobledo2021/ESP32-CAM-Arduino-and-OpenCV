@@ -120,3 +120,173 @@ If we click on the "Start Stream" button below the menu, we can start streaming!
 ----------------------------------------------------------------------
 
 # OpenCV 
+
+Once we are able to access that video , we can use any method that can handle openCV to apply its features.
+
+Here is a simple way to do it using Python.
+
+First of all we need to upload this code via Arduino, to the ESP32:
+```
+#include <WebServer.h>
+#include <WiFi.h>
+#include <esp32cam.h>
+ 
+const char* WIFI_SSID = "****";
+const char* WIFI_PASS = "****";
+ 
+WebServer server(80);
+ 
+ 
+static auto loRes = esp32cam::Resolution::find(320, 240);
+static auto midRes = esp32cam::Resolution::find(350, 530);
+static auto hiRes = esp32cam::Resolution::find(800, 600);
+void serveJpg()
+{
+  auto frame = esp32cam::capture();
+  if (frame == nullptr) {
+    Serial.println("CAPTURE FAIL");
+    server.send(503, "", "");
+    return;
+  }
+  Serial.printf("CAPTURE OK %dx%d %db\n", frame->getWidth(), frame->getHeight(),
+                static_cast<int>(frame->size()));
+ 
+  server.setContentLength(frame->size());
+  server.send(200, "image/jpeg");
+  WiFiClient client = server.client();
+  frame->writeTo(client);
+}
+ 
+void handleJpgLo()
+{
+  if (!esp32cam::Camera.changeResolution(loRes)) {
+    Serial.println("SET-LO-RES FAIL");
+  }
+  serveJpg();
+}
+ 
+void handleJpgHi()
+{
+  if (!esp32cam::Camera.changeResolution(hiRes)) {
+    Serial.println("SET-HI-RES FAIL");
+  }
+  serveJpg();
+}
+ 
+void handleJpgMid()
+{
+  if (!esp32cam::Camera.changeResolution(midRes)) {
+    Serial.println("SET-MID-RES FAIL");
+  }
+  serveJpg();
+}
+ 
+ 
+void  setup(){
+  Serial.begin(115200);
+  Serial.println();
+  {
+    using namespace esp32cam;
+    Config cfg;
+    cfg.setPins(pins::AiThinker);
+    cfg.setResolution(hiRes);
+    cfg.setBufferCount(2);
+    cfg.setJpeg(80);
+ 
+    bool ok = Camera.begin(cfg);
+    Serial.println(ok ? "CAMERA OK" : "CAMERA FAIL");
+  }
+  WiFi.persistent(false);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+  }
+  Serial.print("http://");
+  Serial.println(WiFi.localIP());
+  Serial.println("  /cam-lo.jpg");
+  Serial.println("  /cam-hi.jpg");
+  Serial.println("  /cam-mid.jpg");
+ 
+  server.on("/cam-lo.jpg", handleJpgLo);
+  server.on("/cam-hi.jpg", handleJpgHi);
+  server.on("/cam-mid.jpg", handleJpgMid);
+ 
+  server.begin();
+}
+ 
+void loop()
+{
+  server.handleClient();
+}
+```
+
+Remember to change the ssid and password.
+This code will keep publishing images constantly. We can also decide wether we want the low, mid or high resolution.
+
+We need to have Python installed. Here is a [webpage](https://www.python.org/downloads/windows/) if you are using windows instead of linux.
+
+Then go to the command prompt and install NumPy, OpenCV and cvlib libraries. In windows you can find it by typing "cmd" in the search bar below.
+
+![image](https://github.com/user-attachments/assets/46c23dbf-0762-4080-bc98-5bfb74b4c8d9)
+
+Then type:
+```
+pip install numpy
+pip install opencv-python
+pip install cvlib
+```
+If you are using windows and you do not have pip installed, follow the instructions of this webpage and then type the previous commands: 
+
+https://phoenixnap.com/kb/install-pip-windows
+
+After that you can use this python code below to test if everything went alright. 
+If not, try these commands first:
+```
+pip install matplotlib
+pip install tensorflow
+pip install opencv-python numpy requests
+
+```
+This is the code: 
+```python
+import cv2
+import matplotlib.pyplot as plt
+import cvlib as cv
+import urllib.request
+import numpy as np
+from cvlib.object_detection import draw_bbox
+import concurrent.futures
+
+#use your url here
+url='http://192.168.10.162/cam-hi.jpg'
+im=None
+ 
+def run1():
+    cv2.namedWindow("live transmission", cv2.WINDOW_AUTOSIZE)
+    while True:
+        img_resp=urllib.request.urlopen(url)
+        imgnp=np.array(bytearray(img_resp.read()),dtype=np.uint8)
+        im = cv2.imdecode(imgnp,-1)
+ 
+        cv2.imshow('live transmission',im)
+        key=cv2.waitKey(5)
+        if key==ord('q'):
+            break
+            
+    cv2.destroyAllWindows()
+        
+ 
+if __name__ == '__main__':
+    print("started")
+    with concurrent.futures.ProcessPoolExecutor() as executer:
+            f1= executer.submit(run1)
+```
+
+
+Execute this code by typing on the prompt:
+```
+python -m [code_name]
+```
+(move to the directory where the code is located by using "cd [directory_name]")
+
