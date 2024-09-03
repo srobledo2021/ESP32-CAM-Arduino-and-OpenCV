@@ -12,13 +12,13 @@ The MB base board includes a micro USB or USB-C connector (depending on the vers
 
 Once we have both pieces joined together, we can start the instalation process.
 
-# STEP 1 Install Arduino
+## STEP 1 Install Arduino
 
 Arduino can be installed from its own webpage. Check if the download option suits your device OS (Windows/Linux/macOS). I am using the 2.3.2 version.
 
 Click on this [link](https://www.arduino.cc/en/software) to go to the download webpage.
 
-# STEP 2 Additional URL Manager
+## STEP 2 Additional URL Manager
 
 The first step is to open the Arduino IDE and access the board URL manager by clicking on File/Preferences/Additional Boards Manager URLs and adding the following link:
 
@@ -27,13 +27,13 @@ https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32
 ![image](https://github.com/user-attachments/assets/ef960f5e-7570-4a77-9ffb-44d219d5681e)
 
 
-# STEP 3 Install ESP32 Board Manager
+## STEP 3 Install ESP32 Board Manager
 
 You can either click on the board icon on the left and search for the Espressif Systems esp32 Board Manager, or click on tools/board:""/boards manager. Newest versions work properly (at least the one I am using).
 
 ![image](https://github.com/user-attachments/assets/8c912a14-7f0a-478f-9cf8-f1e2619226dc)
 
-# STEP 4 Select the board and port
+## STEP 4 Select the board and port
 
 Board has to be selected in /tools/board:"*****"/esp32/
 
@@ -44,6 +44,7 @@ We need to find * AI Thinker ESP32-CAM *. As there are plenty of them, it should
 (ESP32 Wrover Module can also be used)
 
 It is really important to select the port in tools/port 
+
 Sometimes, the computer does not recognize the ESP32. In some occasions, this is due to the wire connecting the ESP32 and the PC, check that it is appropiate.
 
 As soon as you connect the USB, a new COM port should appear to be connected to. If not, this can be solved installing the driver CH340.
@@ -59,13 +60,13 @@ There is another much easier way to select both board and port which is by click
 
 ![image](https://github.com/user-attachments/assets/16a4588f-a5f5-4126-b968-a3825dd7f817)
 
-# STEP 5 Test the camera
+## STEP 5 Test the camera
 
 Once all of this is done, we can test the camera from the ESP32 with an already provided code. You can find it in File/examples/ESP32/Camera/CameraWebServer
 
 ![image](https://github.com/user-attachments/assets/3486db22-1608-4281-b7f2-98f3abaf7d7e)
 
-# STEP 6 Modify the code
+## STEP 6 Modify the code
 
 First of all we need to comment the default camera model and use the AI thinker cam:
 
@@ -104,7 +105,7 @@ If the code was successfully uploaded, you will get a message like this:
 It shows your device IP, and the webpage to see what the camera is seeing.
 It is important that the device in wich you are using the browser to search this webpage, is connected to the same network.
 
-# STEP 7 Open camera web server
+## STEP 7 Open camera web server
 
 We have to use that provided link in a browser.
 
@@ -114,3 +115,8 @@ If we click on the "Start Stream" button below the menu, we can start streaming!
 
 
 ![image-17-1024x766](https://github.com/user-attachments/assets/2141b9f9-d8d2-4819-a280-1c1a406887c2)
+
+
+----------------------------------------------------------------------
+
+# OpenCV 
