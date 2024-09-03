@@ -91,3 +91,20 @@ It is important to set the Serial Monitor with the same frecuency as the Serial 
 
 ![image](https://github.com/user-attachments/assets/c89f7077-8ade-4ce8-8039-05f94cc705e5)
 ![image](https://github.com/user-attachments/assets/9b9ae6a4-ee9d-40e5-8575-ac0a4da54927)
+
+It is important to press the reset button on the ESP32 once the code is uploaded, in case something went wrong.
+
+![image](https://github.com/user-attachments/assets/8e1c1056-8939-4158-acd6-a40fe58f2d03)
+
+If the code was successfully uploaded, you will get a message like this: 
+![image](https://github.com/user-attachments/assets/ef1cd6b2-52ec-40ee-aac4-c263ea8b7903)
+
+It shows your device IP, and the webpage to see what the camera is seeing.
+It is important that the device in wich you are using the browser to search this webpage, is connected to the same network.
+
+# STEP 7 Open camera web server
+
+If we click on the "Start Stream" button below the menu, we can start streaming!
+
+![image](https://github.com/user-attachments/assets/e124a15f-a7ef-47c3-8d54-0282c110b5d8)
+
