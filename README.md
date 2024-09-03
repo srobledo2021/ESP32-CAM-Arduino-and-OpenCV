@@ -125,7 +125,18 @@ Once we are able to access that video , we can use any method that can handle op
 
 Here is a simple way to do it using Python.
 
-First of all we need to upload this code via Arduino, to the ESP32:
+First of all we need to upload a library. It can be downloaded from this github webpage:
+
+https://github.com/yoursunny/esp32cam
+
+Click on code/Download zip
+
+![image](https://github.com/user-attachments/assets/87544c95-3980-4570-a1d4-db43c96af5d5)
+
+Once downloaded add this zip library to Arduino Libray Folder. To do so, follow the following steps:
+Sketch -> Include Library -> Add .ZIP Library… -> Navigate to downloaded zip file -> add
+
+Then we need to upload this code via Arduino, to the ESP32:
 ```
 #include <WebServer.h>
 #include <WiFi.h>
