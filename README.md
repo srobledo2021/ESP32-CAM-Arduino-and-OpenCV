@@ -106,6 +106,8 @@ It is important that the device in wich you are using the browser to search this
 
 # STEP 7 Open camera web server
 
+We have to use that provided link in a browser.
+
 If we click on the "Start Stream" button below the menu, we can start streaming!
 
 ![image](https://github.com/user-attachments/assets/e124a15f-a7ef-47c3-8d54-0282c110b5d8)
