@@ -315,7 +315,7 @@ Here is an example using Real-Time Object Detection with YOLO:
 
 -------------------------------------
 
-# Real-time Object Detection with YOLO
+# Real time Object Detection with YOLO
 
 We have already installed openCV but we only have one thing left to install to work with YOLO: ultralytics. This library makes working with YOLO easy and hassle-free.
 ```
