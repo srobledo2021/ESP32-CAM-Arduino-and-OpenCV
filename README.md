@@ -301,8 +301,104 @@ python -m [code_name]
 ```
 (move to the directory where the code is located by using "cd [directory_name]")
 
-If it worked, a new window should pop up and show the camera video. From here you can use openCV however you want and modify this easy code with anything you are interested in doing !
+If it worked, a new window should pop up and show the camera video. From here you can use openCV however you want and modify this easy code with anything you are interested in doing!
 
-Here is a video of a code that recognizes Pikachu !
+Here is an example using Real-Time Object Detection with YOLO:
 
-https://github.com/user-attachments/assets/c6cf159a-df46-4acf-968a-2f93826e959f
+-------------------------------------
+
+# Real-time Object Detection with YOLO
+
+We have already installed openCV but we only have one thing left to install to work with YOLO: ultralytics. This library makes working with YOLO easy and hassle-free.
+```
+pip install ultralytics
+```
+
+YOLO model is loaded using this library. It specifies the location of the YOLO weights file in the yolo-Weights/yolov8n.pt. For this code, we need to instantiate a classNames variable containing a list of object classes which the YOLO model is trained to detect.
+
+Here is the full code: 
+
+```python
+import cv2
+import urllib.request
+import numpy as np
+import math
+from ultralytics import YOLO
+import concurrent.futures
+
+# Define cam URL
+url = 'http://192.168.30.183/cam-hi.jpg'
+
+# Model YOLO
+model = YOLO("yolo-Weights/yolov8n.pt")
+
+# Classes
+classNames = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
+              "traffic light", "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat",
+              "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella",
+              "handbag", "tie", "suitcase", "frisbee", "skis", "snowboard", "sports ball", "kite", "baseball bat",
+              "baseball glove", "skateboard", "surfboard", "tennis racket", "bottle", "wine glass", "cup",
+              "fork", "knife", "spoon", "bowl", "banana", "apple", "sandwich", "orange", "broccoli",
+              "carrot", "hot dog", "pizza", "donut", "cake", "chair", "sofa", "pottedplant", "bed",
+              "diningtable", "toilet", "tvmonitor", "laptop", "mouse", "remote", "keyboard", "cell phone",
+              "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors",
+              "teddy bear", "hair drier", "toothbrush"
+              ]
+
+def run1():
+    cv2.namedWindow("live transmission", cv2.WINDOW_AUTOSIZE)
+    while True:
+        # Capture URL image
+        img_resp = urllib.request.urlopen(url)
+        imgnp = np.array(bytearray(img_resp.read()), dtype=np.uint8)
+        img = cv2.imdecode(imgnp, -1)
+
+        # Process the image with YOLO
+        results = model(img, stream=True)
+        
+        # Draw boxes and labels
+        for r in results:
+            boxes = r.boxes
+
+            for box in boxes:
+                # Box coordinates
+                x1, y1, x2, y2 = box.xyxy[0]
+                x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+
+                # Rectangle drawing
+                cv2.rectangle(img, (x1, y1), (x2, y2), (255, 0, 255), 3)
+
+                # Model confidence
+                confidence = math.ceil((box.conf[0]*100))/100
+                print("Confidence --->", confidence)
+
+                # Class Name
+                cls = int(box.cls[0])
+                print("Class name -->", classNames[cls])
+
+                # Object Details
+                org = [x1, y1]
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                fontScale = 1
+                color = (255, 0, 0)
+                thickness = 2
+
+                cv2.putText(img, classNames[cls], org, font, fontScale, color, thickness)
+
+        # Show image
+        cv2.imshow('live transmission', img)
+        key = cv2.waitKey(5)
+        if key == ord('q'):
+            break
+
+    cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+    print("started")
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        executor.submit(run1)
+
+```
+
+![image](https://github.com/user-attachments/assets/eafdf21f-7db8-43a6-97d9-47d47dd6e3a4)
+
