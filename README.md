@@ -2,7 +2,7 @@
 
 [OpenCV Installation Tutorial](#OpenCV)
 
-[Real Time Object Detection using Yolo](Real-time-Object-Detection-with-YOLO)
+[Real Time Object Detection using Yolo](#Real-time-Object-Detection-with-YOLO)
 
 ------------------------------------------------------------------
 
